@@ -13,7 +13,6 @@ public class Constants {
 	public static final int PLAYER_SIZE = 0x10;
 	public static final float ANIMATION_SPEED = 0.3f;
 	public static final float DRAG = 0.95f;
-	public static final float test = 0.00001f;
 
 
 	/*
