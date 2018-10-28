@@ -1,6 +1,7 @@
-package io.github.armenari.rexaetheres.utils;
+package io.github.armenari.rexaetheres.renderer;
 
 import io.github.armenari.rexaetheres.component.Component;
+import io.github.armenari.rexaetheres.utils.Constants;
 
 public class Animation {
 

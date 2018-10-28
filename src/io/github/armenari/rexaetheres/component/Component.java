@@ -10,7 +10,6 @@ import org.lwjgl.opengl.GL11;
 import io.github.armenari.rexaetheres.game.Game;
 import io.github.armenari.rexaetheres.renderer.Renderer;
 import io.github.armenari.rexaetheres.utils.Constants;
-import io.github.armenari.rexaetheres.utils.IconLoader;
 import io.github.armenari.rexaetheres.utils.Methods;
 
 public class Component {

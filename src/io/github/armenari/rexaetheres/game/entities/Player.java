@@ -30,7 +30,7 @@ public class Player extends Entity {
 	}
 
 	public Player(String name) {
-		super(name, 2 * 16 * Constants.SCALE, 2 * 16 * Constants.SCALE);
+		super(name, 2 * Constants.TILE_SIZE * Constants.SCALE, 2 * Constants.TILE_SIZE * Constants.SCALE);
 		this.inventory = new Inventory();
 	}
 
@@ -81,13 +81,11 @@ public class Player extends Entity {
 
 	@Override
 	public void render() {
-
 		Renderer.renderImage(Texture.character, this.posX, this.posY, Constants.PLAYER_SIZE * Constants.SCALE,
 				Constants.PLAYER_SIZE * Constants.SCALE, new float[] { 1, 1, 1, 0.9f });
-
-		Renderer.renderQuad(posX, posY - 20, (getLife() * 16 * Constants.SCALE) / 100, 5, Constants.RED);
-		Renderer.renderQuad(posX, posY - 15, (getMana() * 16 * Constants.SCALE) / 100, 5, Constants.BLUE);
-		Renderer.renderQuad(posX, posY - 10, (getEndurance() * 16 * Constants.SCALE) / 100, 5, Constants.LIGHT_GREEN);
+		Renderer.renderQuad(posX, posY - 20, (getLife() * Constants.TILE_SIZE * Constants.SCALE) / 100, 5, Constants.RED);
+		Renderer.renderQuad(posX, posY - 15, (getMana() * Constants.TILE_SIZE * Constants.SCALE) / 100, 5, Constants.BLUE);
+		Renderer.renderQuad(posX, posY - 10, (getEndurance() * Constants.TILE_SIZE * Constants.SCALE) / 100, 5, Constants.LIGHT_GREEN);
 
 	}
 
@@ -100,12 +98,12 @@ public class Player extends Entity {
 		recoverItems();
 
 		if (Mouse.isButtonDown(0)) {
-			int x = (int) (Mouse.getX() / (16 * Constants.SCALE));
-			int y = (int) ((Constants.HEIGHT - Mouse.getY()) / (16 * Constants.SCALE));
+			int x = (int) (Mouse.getX() / (Constants.TILE_SIZE * Constants.SCALE));
+			int y = (int) ((Constants.HEIGHT - Mouse.getY()) / (Constants.TILE_SIZE * Constants.SCALE));
 			if (!(x > Game.levelReader.getMapWidth() - 1 || y > Game.levelReader.getMapHeight() - 1)) {
 				if (!Game.levelReader.getTile(x, y).isSolid()) {
-					x = (int) (x * 16 * Constants.SCALE);
-					y = (int) (y * 16 * Constants.SCALE);
+					x = (int) (x * Constants.TILE_SIZE * Constants.SCALE);
+					y = (int) (y * Constants.TILE_SIZE * Constants.SCALE);
 					if (Math.abs(x - posX) <= 64 && Math.abs(y - posY) <= 64 && getEndurance() > 0) {
 						setPosX(x);
 						setPosY(y);
@@ -113,50 +111,50 @@ public class Player extends Entity {
 
 					} else {
 						float cosAlpha = (float) Math.abs(Math.sin(alpha)) / 5;
-						int posXScaled = (int) (posX / (16 * Constants.SCALE));
-						int posYScaled = (int) (posY / (16 * Constants.SCALE));
+						int posXScaled = (int) (posX / (Constants.TILE_SIZE * Constants.SCALE));
+						int posYScaled = (int) (posY / (Constants.TILE_SIZE * Constants.SCALE));
 
 						if (!Game.levelReader.getTile(posXScaled + 1, posYScaled).isSolid()) {
-							Renderer.renderImage(Texture.character, posX + 1 * 16 * Constants.SCALE, posY,
-									16 * Constants.SCALE, 16 * Constants.SCALE, new float[] { Constants.LIGHT_GREEN[0],
+							Renderer.renderImage(Texture.character, posX + 1 * Constants.TILE_SIZE * Constants.SCALE, posY,
+									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, new float[] { Constants.LIGHT_GREEN[0],
 											Constants.LIGHT_GREEN[1], Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled - 1, posYScaled).isSolid()) {
-							Renderer.renderImage(Texture.character, posX - 1 * 16 * Constants.SCALE, posY,
-									16 * Constants.SCALE, 16 * Constants.SCALE, new float[] { Constants.LIGHT_GREEN[0],
+							Renderer.renderImage(Texture.character, posX - 1 * Constants.TILE_SIZE * Constants.SCALE, posY,
+									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, new float[] { Constants.LIGHT_GREEN[0],
 											Constants.LIGHT_GREEN[1], Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled, posYScaled + 1).isSolid()) {
-							Renderer.renderImage(Texture.character, posX, posY + 1 * 16 * Constants.SCALE,
-									16 * Constants.SCALE, 16 * Constants.SCALE, new float[] { Constants.LIGHT_GREEN[0],
+							Renderer.renderImage(Texture.character, posX, posY + 1 * Constants.TILE_SIZE * Constants.SCALE,
+									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, new float[] { Constants.LIGHT_GREEN[0],
 											Constants.LIGHT_GREEN[1], Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled, posYScaled - 1).isSolid()) {
-							Renderer.renderImage(Texture.character, posX, posY - 1 * 16 * Constants.SCALE,
-									16 * Constants.SCALE, 16 * Constants.SCALE, new float[] { Constants.LIGHT_GREEN[0],
+							Renderer.renderImage(Texture.character, posX, posY - 1 * Constants.TILE_SIZE * Constants.SCALE,
+									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, new float[] { Constants.LIGHT_GREEN[0],
 											Constants.LIGHT_GREEN[1], Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled - 1, posYScaled - 1).isSolid()) {
-							Renderer.renderImage(Texture.character, posX - 1 * 16 * Constants.SCALE,
-									posY - 1 * 16 * Constants.SCALE, 16 * Constants.SCALE, 16 * Constants.SCALE,
+							Renderer.renderImage(Texture.character, posX - 1 * Constants.TILE_SIZE * Constants.SCALE,
+									posY - 1 * Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
 									new float[] { Constants.LIGHT_GREEN[0], Constants.LIGHT_GREEN[1],
 											Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled + 1, posYScaled + 1).isSolid()) {
-							Renderer.renderImage(Texture.character, posX + 1 * 16 * Constants.SCALE,
-									posY + 1 * 16 * Constants.SCALE, 16 * Constants.SCALE, 16 * Constants.SCALE,
+							Renderer.renderImage(Texture.character, posX + 1 * Constants.TILE_SIZE * Constants.SCALE,
+									posY + 1 * Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
 									new float[] { Constants.LIGHT_GREEN[0], Constants.LIGHT_GREEN[1],
 											Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled + 1, posYScaled - 1).isSolid()) {
-							Renderer.renderImage(Texture.character, posX + 1 * 16 * Constants.SCALE,
-									posY - 1 * 16 * Constants.SCALE, 16 * Constants.SCALE, 16 * Constants.SCALE,
+							Renderer.renderImage(Texture.character, posX + 1 * Constants.TILE_SIZE * Constants.SCALE,
+									posY - 1 * Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
 									new float[] { Constants.LIGHT_GREEN[0], Constants.LIGHT_GREEN[1],
 											Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled - 1, posYScaled + 1).isSolid()) {
-							Renderer.renderImage(Texture.character, posX - 1 * 16 * Constants.SCALE,
-									posY + 1 * 16 * Constants.SCALE, 16 * Constants.SCALE, 16 * Constants.SCALE,
+							Renderer.renderImage(Texture.character, posX - 1 * Constants.TILE_SIZE * Constants.SCALE,
+									posY + 1 * Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
 									new float[] { Constants.LIGHT_GREEN[0], Constants.LIGHT_GREEN[1],
 											Constants.LIGHT_GREEN[2], cosAlpha });
 						}
@@ -170,8 +168,8 @@ public class Player extends Entity {
 		}
 
 		if (Mouse.isButtonDown(1)) {
-			int x = (int) (Mouse.getX() / (16 * Constants.SCALE));
-			int y = (int) ((Constants.HEIGHT - Mouse.getY()) / (16 * Constants.SCALE));
+			int x = (int) (Mouse.getX() / (Constants.TILE_SIZE * Constants.SCALE));
+			int y = (int) ((Constants.HEIGHT - Mouse.getY()) / (Constants.TILE_SIZE * Constants.SCALE));
 			if (!(x > Game.levelReader.getMapWidth() - 1 || y > Game.levelReader.getMapHeight() - 1)) {
 				if (Game.levelReader.getTile(x, y).isSolid()) {
 					unactionWithBlocks(x, y);
@@ -186,15 +184,15 @@ public class Player extends Entity {
 		time++;
 		for (int i = 0; i < Level.items.size(); i++) {
 			Item item = Level.items.get(i);
-			if (Methods.distance(item.getX() / (16 * Constants.SCALE), item.getY() / (16 * Constants.SCALE),
-					posX / (16 * Constants.SCALE), posY / (16 * Constants.SCALE)) <= 3f) {
+			if (Methods.distance(item.getX() / (Constants.TILE_SIZE * Constants.SCALE), item.getY() / (Constants.TILE_SIZE * Constants.SCALE),
+					posX / (Constants.TILE_SIZE * Constants.SCALE), posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 3f) {
 				if (inventory.getItems().size() < inventory.getInvSize()) {
 					if (item.getDy() < 0.002f) {
-						item.setDx((posX / (16 * Constants.SCALE) - item.getX() / (16 * Constants.SCALE)) * 2);
-						item.setDy((posY / (16 * Constants.SCALE) - item.getY() / (16 * Constants.SCALE)) * 2);
+						item.setDx((posX / (Constants.TILE_SIZE * Constants.SCALE) - item.getX() / (Constants.TILE_SIZE * Constants.SCALE)) * 2);
+						item.setDy((posY / (Constants.TILE_SIZE * Constants.SCALE) - item.getY() / (Constants.TILE_SIZE * Constants.SCALE)) * 2);
 					}
-					if (Methods.distance(item.getX() / (16 * Constants.SCALE), item.getY() / (16 * Constants.SCALE),
-							posX / (16 * Constants.SCALE), posY / (16 * Constants.SCALE)) <= 0.4f) {
+					if (Methods.distance(item.getX() / (Constants.TILE_SIZE * Constants.SCALE), item.getY() / (Constants.TILE_SIZE * Constants.SCALE),
+							posX / (Constants.TILE_SIZE * Constants.SCALE), posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 0.4f) {
 						inventory.addItem(item);
 						Level.items.remove(item);
 					}
@@ -207,7 +205,7 @@ public class Player extends Entity {
 		for (ActionBlock ab : Level.actionBlocks) {
 			if (Game.levelReader.getTile(x, y).getPosX() == ab.getX()
 					&& Game.levelReader.getTile(x, y).getPosY() == ab.getY()
-					&& Methods.distance(x, y, posX / (16 * Constants.SCALE), posY / (16 * Constants.SCALE)) <= 1) {
+					&& Methods.distance(x, y, posX / (Constants.TILE_SIZE * Constants.SCALE), posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 1) {
 				ab.closeAnimation();
 				if(ab.isMultiAction()) {
 					ab.unaction();
@@ -235,7 +233,7 @@ public class Player extends Entity {
 			ActionBlock ab = Level.actionBlocks.get(i);
 			if (Game.levelReader.getTile(x, y).getPosX() == ab.getX()
 					&& Game.levelReader.getTile(x, y).getPosY() == ab.getY()
-					&& Methods.distance(x, y, posX / (16 * Constants.SCALE), posY / (16 * Constants.SCALE)) <= 1) {
+					&& Methods.distance(x, y, posX / (Constants.TILE_SIZE * Constants.SCALE), posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 1) {
 				ab.playAnimation();
 				if(ab.isMultiAction()) {
 					ab.action();

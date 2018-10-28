@@ -28,18 +28,17 @@ public abstract class Item {
 	public abstract void action();
 
 	public void render() {
-		int tile_x = 16 * (ID % 8);
-		int tile_y = 16 * (int) (ID / 8);
-		Renderer.renderOffsetImage(texture, x, y, 16 * Constants.SCALE, 16 * Constants.SCALE, texture.getWidth(),
-				texture.getHeight(), new float[] { 1, 1, 1, 0.7f }, tile_x, tile_y, tile_x + 16, tile_y + 16);
-
+		int tile_x = Constants.TILE_SIZE * (ID % 8);
+		int tile_y = Constants.TILE_SIZE * (int) (ID / 8);
+		Renderer.renderOffsetImage(texture, x, y, Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, texture.getWidth(),
+				texture.getHeight(), new float[] { 1, 1, 1, 0.7f }, tile_x, tile_y, tile_x + Constants.TILE_SIZE, tile_y + Constants.TILE_SIZE);
 	}
 
 	public void render(float x_, float y_, float size) {
-		int tile_x = 16 * (ID % 8);
-		int tile_y = 16 * (int) (ID / 8);
+		int tile_x = Constants.TILE_SIZE * (ID % 8);
+		int tile_y = Constants.TILE_SIZE * (int) (ID / 8);
 		Renderer.renderOffsetImage(texture, x_, y_, size, size, texture.getWidth(), texture.getHeight(),
-				new float[] { 1, 1, 1, 0.7f }, tile_x, tile_y, tile_x + 16, tile_y + 16);
+				new float[] { 1, 1, 1, 0.7f }, tile_x, tile_y, tile_x + Constants.TILE_SIZE, tile_y + Constants.TILE_SIZE);
 	}
 
 	public void update() {

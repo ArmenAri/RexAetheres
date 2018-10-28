@@ -1,6 +1,6 @@
 package io.github.armenari.rexaetheres.game.blocks;
 
-import io.github.armenari.rexaetheres.utils.Animation;
+import io.github.armenari.rexaetheres.renderer.Animation;
 
 public class Activator extends ActionBlock {
 
@@ -13,13 +13,19 @@ public class Activator extends ActionBlock {
 
 	@Override
 	public void action() {
-		this.signal = this.animation.getFrame();
-		System.out.println(signal);
+		this.setSignal(this.animation.getFrame());  
 	}
 
 	@Override
 	public void unaction() {
-		this.signal = this.animation.getFrame();
-		System.out.println(signal);
+		this.setSignal(this.animation.getFrame());
+	}
+
+	public int getSignal() {
+		return signal;
+	}
+
+	public void setSignal(int signal) {
+		this.signal = signal;
 	}
 }

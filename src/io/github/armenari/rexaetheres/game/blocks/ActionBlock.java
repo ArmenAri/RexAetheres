@@ -1,7 +1,7 @@
 package io.github.armenari.rexaetheres.game.blocks;
 
+import io.github.armenari.rexaetheres.renderer.Animation;
 import io.github.armenari.rexaetheres.renderer.Renderer;
-import io.github.armenari.rexaetheres.utils.Animation;
 
 public abstract class ActionBlock {
 

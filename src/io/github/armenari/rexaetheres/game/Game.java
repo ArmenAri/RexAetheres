@@ -18,9 +18,9 @@ public class Game {
         levelReader.render();
         glLight(GL_LIGHT0, GL_POSITION,
                 Methods.floatBuffer(
-                        Level.player.getPosX() + 8 * Constants.SCALE,
-                        Level.player.getPosY() + 8 * Constants.SCALE,
-                        64, 1));
+                        Level.player.getPosX() + Constants.TILE_SIZE / 2 * Constants.SCALE,
+                        Level.player.getPosY() + Constants.TILE_SIZE / 2 * Constants.SCALE,
+                        48, 1));
     }
 
 

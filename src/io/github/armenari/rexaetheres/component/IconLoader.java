@@ -1,4 +1,4 @@
-package io.github.armenari.rexaetheres.utils;
+package io.github.armenari.rexaetheres.component;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

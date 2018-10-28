@@ -38,7 +38,7 @@ public class Inventory {
 		Renderer.renderText("Inventory", startX - 16, startY - 50, 25);
 		for (int i = 0; i < getItems().size(); i++) {
 			getItems().get(i).render(startX + (i % itemsPerRow) * invDisplayItemSize,
-					startY + 2 + (i / itemsPerRow) * invDisplayItemSize, invDisplayItemSize);
+					startY + (i / itemsPerRow) * invDisplayItemSize, invDisplayItemSize);
 		}
 	}
 
@@ -51,8 +51,8 @@ public class Inventory {
 				while (Mouse.next()) {
 					if (!Mouse.getEventButtonState()) {
 						if (Mouse.getEventButton() == 0) {
-							int itemIndex = ((x / invDisplayItemSize) - 27)
-									+ (y / invDisplayItemSize - itemsPerRow) * itemsPerRow;
+							int itemIndex = ((x / invDisplayItemSize))
+									+ (y / invDisplayItemSize - itemsPerRow) * itemsPerRow - 23;
 							if (itemIndex < items.size()) {
 								items.get(itemIndex).action();
 								removeItem(items.get(itemIndex));

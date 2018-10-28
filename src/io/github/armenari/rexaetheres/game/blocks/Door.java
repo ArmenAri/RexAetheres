@@ -1,7 +1,7 @@
 package io.github.armenari.rexaetheres.game.blocks;
 
 import io.github.armenari.rexaetheres.game.Level;
-import io.github.armenari.rexaetheres.utils.Animation;
+import io.github.armenari.rexaetheres.renderer.Animation;
 import io.github.armenari.rexaetheres.utils.Constants;
 
 public class Door extends ActionBlock {
@@ -24,13 +24,12 @@ public class Door extends ActionBlock {
 			}
 		}
 		Level.player.setPosX(destination.getX());
-		Level.player.setPosY(destination.getY() + 16 * Constants.SCALE);
+		Level.player.setPosY(destination.getY() + Constants.TILE_SIZE * Constants.SCALE);
 		destination.getAnimation().setFrame(destination.getAnimation().getFrameLimit());
 	}
 
 	@Override
 	public void unaction() {
 		// TODO Auto-generated method stub
-
 	}
 }

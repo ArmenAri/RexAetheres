@@ -140,8 +140,8 @@ public class Renderer {
 	}
 
 	public static void renderTile(Tile t) {
-		Renderer.renderOffsetImage(Texture.ui_pieces, t.getPosX(), t.getPosY(), 16 * Constants.SCALE,
-				16 * Constants.SCALE, Texture.ui_pieces.getWidth(), Texture.ui_pieces.getHeight(),
+		Renderer.renderOffsetImage(Texture.ui_pieces, t.getPosX(), t.getPosY(), Constants.TILE_SIZE * Constants.SCALE,
+				Constants.TILE_SIZE * Constants.SCALE, Texture.ui_pieces.getWidth(), Texture.ui_pieces.getHeight(),
 				new float[] { 1, 1, 1, 1 }, t.getTileX(), t.getTileY(), t.getSizeX(), t.getSizeY());
 	}
 
@@ -162,14 +162,14 @@ public class Renderer {
 	}
 
 	public static void renderBackground() {
-		for (int l = 0; l < Constants.WIDTH / 16; l++) {
-			for (int m = 0; m < Constants.HEIGHT / 16; m++) {
-				int x = 16 * (25 % 24);
-				int y = 16 * (int) (25 / 24);
-				int size_x = x + 16;
-				int size_y = y + 16;
-				Renderer.renderOffsetImage(Texture.ui_pieces, l * 16 * Constants.SCALE, m * 16 * Constants.SCALE,
-						16 * Constants.SCALE, 16 * Constants.SCALE, Texture.ui_pieces.getWidth(),
+		for (int l = 0; l < Constants.WIDTH / Constants.TILE_SIZE; l++) {
+			for (int m = 0; m < Constants.HEIGHT / Constants.TILE_SIZE; m++) {
+				int x = Constants.TILE_SIZE * (25 % 24);
+				int y = Constants.TILE_SIZE * (int) (25 / 24);
+				int size_x = x + Constants.TILE_SIZE;
+				int size_y = y + Constants.TILE_SIZE;
+				Renderer.renderOffsetImage(Texture.ui_pieces, l * Constants.TILE_SIZE * Constants.SCALE, m * Constants.TILE_SIZE * Constants.SCALE,
+						Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, Texture.ui_pieces.getWidth(),
 						Texture.ui_pieces.getHeight(), new float[] { 1, 1, 1, 1 }, x, y, size_x, size_y);
 			}
 		}
