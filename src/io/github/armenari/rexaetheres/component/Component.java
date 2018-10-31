@@ -22,10 +22,10 @@ public class Component {
 		game = new Game();
 	}
 
-	private void createDisplay(int width, int height) {
+	private void createDisplay(String title, int width, int height) {
 		try {
-			Display.setDisplayMode(new DisplayMode(Constants.WIDTH, Constants.HEIGHT));
-			Display.setTitle(Constants.TITLE);
+			Display.setDisplayMode(new DisplayMode(width, height));
+			Display.setTitle(title);
 			Display.setIcon(IconLoader.load("/assets/icon.png"));
 			Display.create();
 		} catch (LWJGLException e) {
@@ -58,7 +58,7 @@ public class Component {
 
 	public static void main(String[] args) {
 		Component main = new Component();
-		main.createDisplay(Constants.WIDTH, Constants.HEIGHT);
+		main.createDisplay(Constants.TITLE, Constants.WIDTH, Constants.HEIGHT);
 
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_LIGHT0);

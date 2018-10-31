@@ -8,6 +8,7 @@ import io.github.armenari.rexaetheres.game.Game;
 import io.github.armenari.rexaetheres.game.Inventory;
 import io.github.armenari.rexaetheres.game.Level;
 import io.github.armenari.rexaetheres.game.blocks.ActionBlock;
+import io.github.armenari.rexaetheres.game.blocks.Door;
 import io.github.armenari.rexaetheres.game.items.Item;
 import io.github.armenari.rexaetheres.renderer.Renderer;
 import io.github.armenari.rexaetheres.renderer.Texture;
@@ -21,7 +22,7 @@ public class Player extends Entity {
 	private float endurance = 100;
 
 	Inventory inventory;
-	
+
 	Timer timer = new Timer();
 
 	public Player(String name, float posX, float posY) {
@@ -42,8 +43,7 @@ public class Player extends Entity {
 	}
 
 	/**
-	 * @param life
-	 *            the life to set
+	 * @param life the life to set
 	 */
 	public void setLife(int life) {
 		this.life = life;
@@ -57,8 +57,7 @@ public class Player extends Entity {
 	}
 
 	/**
-	 * @param mana
-	 *            the mana to set
+	 * @param mana the mana to set
 	 */
 	public void setMana(int mana) {
 		this.mana = mana;
@@ -72,8 +71,7 @@ public class Player extends Entity {
 	}
 
 	/**
-	 * @param endurance
-	 *            the endurance to set
+	 * @param endurance the endurance to set
 	 */
 	public void setEndurance(int endurance) {
 		this.endurance = endurance;
@@ -83,9 +81,12 @@ public class Player extends Entity {
 	public void render() {
 		Renderer.renderImage(Texture.character, this.posX, this.posY, Constants.PLAYER_SIZE * Constants.SCALE,
 				Constants.PLAYER_SIZE * Constants.SCALE, new float[] { 1, 1, 1, 0.9f });
-		Renderer.renderQuad(posX, posY - 20, (getLife() * Constants.TILE_SIZE * Constants.SCALE) / 100, 5, Constants.RED);
-		Renderer.renderQuad(posX, posY - 15, (getMana() * Constants.TILE_SIZE * Constants.SCALE) / 100, 5, Constants.BLUE);
-		Renderer.renderQuad(posX, posY - 10, (getEndurance() * Constants.TILE_SIZE * Constants.SCALE) / 100, 5, Constants.LIGHT_GREEN);
+		Renderer.renderQuad(posX, posY - 20, (getLife() * Constants.TILE_SIZE * Constants.SCALE) / 100, 5,
+				Constants.RED);
+		Renderer.renderQuad(posX, posY - 15, (getMana() * Constants.TILE_SIZE * Constants.SCALE) / 100, 5,
+				Constants.BLUE);
+		Renderer.renderQuad(posX, posY - 10, (getEndurance() * Constants.TILE_SIZE * Constants.SCALE) / 100, 5,
+				Constants.LIGHT_GREEN);
 
 	}
 
@@ -115,46 +116,56 @@ public class Player extends Entity {
 						int posYScaled = (int) (posY / (Constants.TILE_SIZE * Constants.SCALE));
 
 						if (!Game.levelReader.getTile(posXScaled + 1, posYScaled).isSolid()) {
-							Renderer.renderImage(Texture.character, posX + 1 * Constants.TILE_SIZE * Constants.SCALE, posY,
-									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, new float[] { Constants.LIGHT_GREEN[0],
-											Constants.LIGHT_GREEN[1], Constants.LIGHT_GREEN[2], cosAlpha });
+							Renderer.renderImage(Texture.character, posX + 1 * Constants.TILE_SIZE * Constants.SCALE,
+									posY, Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
+									new float[] { Constants.LIGHT_GREEN[0], Constants.LIGHT_GREEN[1],
+											Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled - 1, posYScaled).isSolid()) {
-							Renderer.renderImage(Texture.character, posX - 1 * Constants.TILE_SIZE * Constants.SCALE, posY,
-									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, new float[] { Constants.LIGHT_GREEN[0],
-											Constants.LIGHT_GREEN[1], Constants.LIGHT_GREEN[2], cosAlpha });
+							Renderer.renderImage(Texture.character, posX - 1 * Constants.TILE_SIZE * Constants.SCALE,
+									posY, Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
+									new float[] { Constants.LIGHT_GREEN[0], Constants.LIGHT_GREEN[1],
+											Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled, posYScaled + 1).isSolid()) {
-							Renderer.renderImage(Texture.character, posX, posY + 1 * Constants.TILE_SIZE * Constants.SCALE,
-									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, new float[] { Constants.LIGHT_GREEN[0],
-											Constants.LIGHT_GREEN[1], Constants.LIGHT_GREEN[2], cosAlpha });
+							Renderer.renderImage(Texture.character, posX,
+									posY + 1 * Constants.TILE_SIZE * Constants.SCALE,
+									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
+									new float[] { Constants.LIGHT_GREEN[0], Constants.LIGHT_GREEN[1],
+											Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled, posYScaled - 1).isSolid()) {
-							Renderer.renderImage(Texture.character, posX, posY - 1 * Constants.TILE_SIZE * Constants.SCALE,
-									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, new float[] { Constants.LIGHT_GREEN[0],
-											Constants.LIGHT_GREEN[1], Constants.LIGHT_GREEN[2], cosAlpha });
+							Renderer.renderImage(Texture.character, posX,
+									posY - 1 * Constants.TILE_SIZE * Constants.SCALE,
+									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
+									new float[] { Constants.LIGHT_GREEN[0], Constants.LIGHT_GREEN[1],
+											Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled - 1, posYScaled - 1).isSolid()) {
 							Renderer.renderImage(Texture.character, posX - 1 * Constants.TILE_SIZE * Constants.SCALE,
-									posY - 1 * Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
+									posY - 1 * Constants.TILE_SIZE * Constants.SCALE,
+									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
 									new float[] { Constants.LIGHT_GREEN[0], Constants.LIGHT_GREEN[1],
 											Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled + 1, posYScaled + 1).isSolid()) {
 							Renderer.renderImage(Texture.character, posX + 1 * Constants.TILE_SIZE * Constants.SCALE,
-									posY + 1 * Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
+									posY + 1 * Constants.TILE_SIZE * Constants.SCALE,
+									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
 									new float[] { Constants.LIGHT_GREEN[0], Constants.LIGHT_GREEN[1],
 											Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled + 1, posYScaled - 1).isSolid()) {
 							Renderer.renderImage(Texture.character, posX + 1 * Constants.TILE_SIZE * Constants.SCALE,
-									posY - 1 * Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
+									posY - 1 * Constants.TILE_SIZE * Constants.SCALE,
+									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
 									new float[] { Constants.LIGHT_GREEN[0], Constants.LIGHT_GREEN[1],
 											Constants.LIGHT_GREEN[2], cosAlpha });
 						}
 						if (!Game.levelReader.getTile(posXScaled - 1, posYScaled + 1).isSolid()) {
 							Renderer.renderImage(Texture.character, posX - 1 * Constants.TILE_SIZE * Constants.SCALE,
-									posY + 1 * Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
+									posY + 1 * Constants.TILE_SIZE * Constants.SCALE,
+									Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
 									new float[] { Constants.LIGHT_GREEN[0], Constants.LIGHT_GREEN[1],
 											Constants.LIGHT_GREEN[2], cosAlpha });
 						}
@@ -178,21 +189,24 @@ public class Player extends Entity {
 		}
 	}
 
-	float time = 0;
-
 	private void recoverItems() {
-		time++;
 		for (int i = 0; i < Level.items.size(); i++) {
 			Item item = Level.items.get(i);
-			if (Methods.distance(item.getX() / (Constants.TILE_SIZE * Constants.SCALE), item.getY() / (Constants.TILE_SIZE * Constants.SCALE),
-					posX / (Constants.TILE_SIZE * Constants.SCALE), posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 3f) {
+			if (Methods.distance(item.getX() / (Constants.TILE_SIZE * Constants.SCALE),
+					item.getY() / (Constants.TILE_SIZE * Constants.SCALE),
+					posX / (Constants.TILE_SIZE * Constants.SCALE),
+					posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 3f) {
 				if (inventory.getItems().size() < inventory.getInvSize()) {
 					if (item.getDy() < 0.002f) {
-						item.setDx((posX / (Constants.TILE_SIZE * Constants.SCALE) - item.getX() / (Constants.TILE_SIZE * Constants.SCALE)) * 2);
-						item.setDy((posY / (Constants.TILE_SIZE * Constants.SCALE) - item.getY() / (Constants.TILE_SIZE * Constants.SCALE)) * 2);
+						item.setDx((posX / (Constants.TILE_SIZE * Constants.SCALE)
+								- item.getX() / (Constants.TILE_SIZE * Constants.SCALE)) * 2);
+						item.setDy((posY / (Constants.TILE_SIZE * Constants.SCALE)
+								- item.getY() / (Constants.TILE_SIZE * Constants.SCALE)) * 2);
 					}
-					if (Methods.distance(item.getX() / (Constants.TILE_SIZE * Constants.SCALE), item.getY() / (Constants.TILE_SIZE * Constants.SCALE),
-							posX / (Constants.TILE_SIZE * Constants.SCALE), posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 0.4f) {
+					if (Methods.distance(item.getX() / (Constants.TILE_SIZE * Constants.SCALE),
+							item.getY() / (Constants.TILE_SIZE * Constants.SCALE),
+							posX / (Constants.TILE_SIZE * Constants.SCALE),
+							posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 0.4f) {
 						inventory.addItem(item);
 						Level.items.remove(item);
 					}
@@ -205,9 +219,10 @@ public class Player extends Entity {
 		for (ActionBlock ab : Level.actionBlocks) {
 			if (Game.levelReader.getTile(x, y).getPosX() == ab.getX()
 					&& Game.levelReader.getTile(x, y).getPosY() == ab.getY()
-					&& Methods.distance(x, y, posX / (Constants.TILE_SIZE * Constants.SCALE), posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 1) {
+					&& Methods.distance(x, y, posX / (Constants.TILE_SIZE * Constants.SCALE),
+							posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 1) {
 				ab.closeAnimation();
-				if(ab.isMultiAction()) {
+				if (ab.isMultiAction()) {
 					ab.unaction();
 				}
 				if (ab.getAnimation().getFrame() == 0) {
@@ -215,7 +230,7 @@ public class Player extends Entity {
 						if (!Mouse.getEventButtonState()) {
 							if (Mouse.getEventButton() == 0) {
 								if (!ab.isUnactionDone()) {
-									if(!ab.isMultiAction()) {
+									if (!ab.isMultiAction()) {
 										ab.unaction();
 									}
 									ab.setUnactionDone(true);
@@ -233,20 +248,31 @@ public class Player extends Entity {
 			ActionBlock ab = Level.actionBlocks.get(i);
 			if (Game.levelReader.getTile(x, y).getPosX() == ab.getX()
 					&& Game.levelReader.getTile(x, y).getPosY() == ab.getY()
-					&& Methods.distance(x, y, posX / (Constants.TILE_SIZE * Constants.SCALE), posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 1) {
-				ab.playAnimation();
-				if(ab.isMultiAction()) {
+					&& Methods.distance(x, y, posX / (Constants.TILE_SIZE * Constants.SCALE),
+							posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 1) {
+				
+				
+				if (ab instanceof Door) {
+					if (Game.access_granted) {
+						ab.playAnimation();
+					}
+				} else {
+					ab.playAnimation();
+				}
+
+				if (ab.isMultiAction()) {
 					ab.action();
 				}
+				
 				if (ab.getAnimation().getFrame() == ab.getAnimation().getFrameLimit()) {
 					while (Mouse.next()) {
 						if (!Mouse.getEventButtonState()) {
 							if (Mouse.getEventButton() == 0) {
 								if (!ab.isActionDone()) {
-									if(!ab.isMultiAction()) {
+									if (!ab.isMultiAction()) {
 										ab.action();
 									}
-									if(!ab.isInfiniteAction())
+									if (!ab.isInfiniteAction())
 										ab.setActionDone(true);
 								}
 							}

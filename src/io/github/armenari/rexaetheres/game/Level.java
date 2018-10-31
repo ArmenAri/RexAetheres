@@ -19,25 +19,29 @@ public class Level {
 	public static Player player;
 	public static ArrayList<ActionBlock> actionBlocks;
 	public static ArrayList<Item> items;
+	public static ArrayList<Activator> activators;
+	public static ArrayList<Door> doors;
 	private ArrayList<Tile> tiles;
 	private ArrayList<Tile> floor;
 	private int mapHeight;
 	private int mapWidth;
 
-	public Level(String level) {
+	public Level(String level, String secret_key_path) {
+		activators = new ArrayList<>();
+		doors = new ArrayList<>();
 		actionBlocks = new ArrayList<>();
 		items = new ArrayList<>();
 		player = new Player("Player");
 		floor = new ArrayList<>();
-		tiles = createTileArray(level);
+		tiles = createTileArray(level, secret_key_path);
 	}
 
-	public void changeLevel(String path) {
-		actionBlocks.clear();
-		this.floor.clear();
-		this.tiles.clear();
-		this.tiles = createTileArray(path);
-	}
+//	public void changeLevel(String path, String secret_key_path) {
+//		actionBlocks.clear();
+//		this.floor.clear();
+//		this.tiles.clear();
+//		this.tiles = createTileArray(path, secret_key_path);
+//	}
 
 	public void render() {
 		Renderer.renderBackground();
@@ -65,9 +69,12 @@ public class Level {
 		player.update();
 	}
 
-	public ArrayList<Tile> createTileArray(String path) {
+	public ArrayList<Tile> createTileArray(String path, String secret_key_path) {
+		int act = 1;
 		ArrayList<Tile> t = new ArrayList<>();
 		JsonObject lvl;
+		int activator_code;
+		
 		lvl = Renderer.initJSONFile("levels/" + path);
 		JsonArray layer = lvl.getJsonArray("layers");
 		int map_width = layer.getJsonObject(0).getInt("width");
@@ -86,18 +93,31 @@ public class Level {
 					int tile_size_x = tile_x + Constants.TILE_SIZE;
 					int tile_size_y = tile_y + Constants.TILE_SIZE;
 					if (id >= 0 && id != 54) {
-						if (id == 120)
-							actionBlocks.add(new Activator((int) (i * Constants.TILE_SIZE * Constants.SCALE),
-									(int) (j * Constants.TILE_SIZE * Constants.SCALE), id, new Animation("activator", false)));
+						if (id == 120) {
+							activator_code = Renderer.initJSONFile("secret_keys/" + secret_key_path).getJsonObject("activator_" + act).getInt("code");
+							Activator a = new Activator((int) (i * Constants.TILE_SIZE * Constants.SCALE),
+									(int) (j * Constants.TILE_SIZE * Constants.SCALE), id, new Animation("activator", false), activator_code);
+							actionBlocks.add(a);
+							activators.add(a);
+							act++;
+						}
 						else if (id == 176)
 							actionBlocks.add(new Chest((int) (i * Constants.TILE_SIZE * Constants.SCALE),
 									(int) (j * Constants.TILE_SIZE * Constants.SCALE), id, new Animation("chest", false)));
-						else if (id == 172)
-							actionBlocks.add(new Door((int) (i * Constants.TILE_SIZE * Constants.SCALE),
-									(int) (j * Constants.TILE_SIZE * Constants.SCALE), id, new Animation("wooden_door", false)));
-						else if (id == 148)
-							actionBlocks.add(new Door((int) (i * Constants.TILE_SIZE * Constants.SCALE),
-									(int) (j * Constants.TILE_SIZE * Constants.SCALE), id, new Animation("metal_door", false)));
+						else if (id == 172) {
+							Door d = new Door((int) (i * Constants.TILE_SIZE * Constants.SCALE),
+									(int) (j * Constants.TILE_SIZE * Constants.SCALE), id, new Animation("wooden_door", false));
+							actionBlocks.add(d);
+							doors.add(d);
+						}
+							
+						else if (id == 148) {
+							Door d = new Door((int) (i * Constants.TILE_SIZE * Constants.SCALE),
+									(int) (j * Constants.TILE_SIZE * Constants.SCALE), id, new Animation("metal_door", false));
+							actionBlocks.add(d);
+							doors.add(d);
+						}
+							
 						else if (id == 192)
 							actionBlocks.add(new Door((int) (i * Constants.TILE_SIZE * Constants.SCALE),
 									(int) (j * Constants.TILE_SIZE * Constants.SCALE), id, new Animation("stone_double_door", false)));

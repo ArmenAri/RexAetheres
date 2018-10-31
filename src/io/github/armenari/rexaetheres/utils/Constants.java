@@ -11,7 +11,7 @@ public class Constants {
 	public static final int FONT_SIZE_MEDIUM = 0x10;
 	public static final int FONT_SIZE_BIG = 0x18;
 	public static final int PLAYER_SIZE = 0x10;
-	public static final float ANIMATION_SPEED = 0.3f;
+	public static final float ANIMATION_SPEED = 0.2f;
 	public static final float DRAG = 0.95f;
 	public static final int TILE_SIZE = 16;
 
