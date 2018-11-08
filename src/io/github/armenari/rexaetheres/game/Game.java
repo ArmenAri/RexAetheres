@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import io.github.armenari.rexaetheres.game.blocks.Activator;
 import io.github.armenari.rexaetheres.game.blocks.Door;
+import io.github.armenari.rexaetheres.renderer.Notification;
 import io.github.armenari.rexaetheres.renderer.Renderer;
 import io.github.armenari.rexaetheres.utils.Constants;
 import io.github.armenari.rexaetheres.utils.Methods;
@@ -17,33 +18,54 @@ public class Game {
 	public static Level levelReader;
 	ArrayList<Boolean> passage_allowed;
 	public static boolean access_granted;
+	
+	public static ArrayList<Notification> notifications = new ArrayList<>();
 
 	public Game() {
 		levelReader = new Level("level_4.json", "secret_key_1.json");
 		passage_allowed = new ArrayList<>();
+		notifications.add(new Notification());
 	}
 
 	public void render() {
 		levelReader.render();
 		glLight(GL_LIGHT0, GL_POSITION,
 				Methods.floatBuffer(Level.player.getPosX() + Constants.TILE_SIZE / 2 * Constants.SCALE,
-						Level.player.getPosY() + Constants.TILE_SIZE / 2 * Constants.SCALE, 48, 1));
+						Level.player.getPosY() + Constants.TILE_SIZE / 2 * Constants.SCALE, 72, 1));
 
+		
+		
 		for (int i = 0; i < Level.doors.size(); i++) {
 			Door d = Level.doors.get(i);
 			if (access_granted) {
+				
 				Renderer.renderQuad(d.getX() + Constants.TILE_SIZE * Constants.SCALE + 7 * Constants.SCALE, d.getY() + Constants.TILE_SIZE / 2 * Constants.SCALE - 16, 8, 8, new float[] {0, 1, 0, 1});
 			} else {
 				Renderer.renderQuad(d.getX() + Constants.TILE_SIZE * Constants.SCALE + 7 * Constants.SCALE, d.getY() + Constants.TILE_SIZE / 2 * Constants.SCALE - 16, 8, 8, new float[] {1, 0, 0, 1});
 
 			}
 		}
+		
+		
+		
+		for (int i = 0; i < notifications.size(); i++) {
+			if (!notifications.get(i).isFinished()) {
+				notifications.get(i).animate(notifications.get(i).getMsg(), notifications.get(i).getColor());
+			} 
+		}
 	}
 
 	public void update() {
 		levelReader.update();
-		access_granted = isAccesGranted();
-
+		if(!access_granted) {
+			access_granted = isAccesGranted();
+			if(access_granted) {
+				Game.notifications.get(0).launch("THE DOOR IS UNLOCKED !", Constants.GREEN);
+				System.out.println("the door is unlocked !");
+			}
+		}
+		
+		
 	}
 
 	public boolean isAccesGranted() {
@@ -57,6 +79,7 @@ public class Game {
 				if (a.getCode() == b.getSignal()) {
 					Renderer.renderQuad(i * Constants.SCALE * 2, j * Constants.SCALE * 2, Constants.SCALE * 2,
 							Constants.SCALE * 2, Constants.YELLOW);
+					
 				}
 			}
 

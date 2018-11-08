@@ -87,6 +87,7 @@ public class Player extends Entity {
 				Constants.BLUE);
 		Renderer.renderQuad(posX, posY - 10, (getEndurance() * Constants.TILE_SIZE * Constants.SCALE) / 100, 5,
 				Constants.LIGHT_GREEN);
+		
 
 	}
 
@@ -111,6 +112,11 @@ public class Player extends Entity {
 						endurance -= 0.1f;
 
 					} else {
+						Game.notifications
+								.get(0).launch(
+										"you cannot move to " + (int) (x / Constants.TILE_SIZE / Constants.SCALE)
+												+ " : " + (int) (y / Constants.TILE_SIZE / Constants.SCALE),
+										Constants.RED);
 						float cosAlpha = (float) Math.abs(Math.sin(alpha)) / 5;
 						int posXScaled = (int) (posX / (Constants.TILE_SIZE * Constants.SCALE));
 						int posYScaled = (int) (posY / (Constants.TILE_SIZE * Constants.SCALE));
@@ -208,6 +214,7 @@ public class Player extends Entity {
 							posX / (Constants.TILE_SIZE * Constants.SCALE),
 							posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 0.4f) {
 						inventory.addItem(item);
+						Game.notifications.get(0).launch(item.getName() + " x1", Constants.LIGHT_BLUE);
 						Level.items.remove(item);
 					}
 				}
@@ -250,11 +257,13 @@ public class Player extends Entity {
 					&& Game.levelReader.getTile(x, y).getPosY() == ab.getY()
 					&& Methods.distance(x, y, posX / (Constants.TILE_SIZE * Constants.SCALE),
 							posY / (Constants.TILE_SIZE * Constants.SCALE)) <= 1) {
-				
-				
+
 				if (ab instanceof Door) {
 					if (Game.access_granted) {
 						ab.playAnimation();
+						
+					} else {
+						Game.notifications.get(0).launch("THE DOOR IS LOCKED !", Constants.RED);
 					}
 				} else {
 					ab.playAnimation();
@@ -263,7 +272,7 @@ public class Player extends Entity {
 				if (ab.isMultiAction()) {
 					ab.action();
 				}
-				
+
 				if (ab.getAnimation().getFrame() == ab.getAnimation().getFrameLimit()) {
 					while (Mouse.next()) {
 						if (!Mouse.getEventButtonState()) {

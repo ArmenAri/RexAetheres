@@ -55,6 +55,7 @@ public class Inventory {
 									+ (y / invDisplayItemSize - itemsPerRow) * itemsPerRow - 23;
 							if (itemIndex < items.size()) {
 								items.get(itemIndex).action();
+								Game.notifications.get(0).launch("You have used a " + items.get(itemIndex).getName() + " !", Constants.PURPLE);
 								removeItem(items.get(itemIndex));
 							}
 						}

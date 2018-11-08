@@ -1,5 +1,7 @@
 package io.github.armenari.rexaetheres.utils;
 
+import org.lwjgl.opengl.Display;
+
 public class Constants {
 
 	public static final float SCALE = 4.0f;
@@ -14,7 +16,7 @@ public class Constants {
 	public static final float ANIMATION_SPEED = 0.2f;
 	public static final float DRAG = 0.95f;
 	public static final int TILE_SIZE = 16;
-
+	public static final int PAPER_WIDTH = Display.getWidth() / 3;
 
 	/*
 	 * Colors

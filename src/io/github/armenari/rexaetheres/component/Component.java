@@ -10,7 +10,6 @@ import org.lwjgl.opengl.GL11;
 import io.github.armenari.rexaetheres.game.Game;
 import io.github.armenari.rexaetheres.renderer.Renderer;
 import io.github.armenari.rexaetheres.utils.Constants;
-import io.github.armenari.rexaetheres.utils.Methods;
 
 public class Component {
 
@@ -47,8 +46,8 @@ public class Component {
 	private void start() {
 		while (!Display.isCloseRequested()) {
 			Renderer.clear();
-			render();
 			update();
+			render();
 			Display.update();
 			Display.sync(Constants.FPS);
 		}
@@ -62,11 +61,11 @@ public class Component {
 
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_LIGHT0);
-		GL11.glEnable(GL11.GL_LIGHT1);
+		//GL11.glEnable(GL11.GL_LIGHT1);
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 
-		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, Methods.floatBuffer(1f, 1f, 1f, 0f));
-		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, Methods.floatBuffer(0f, 0f, 0f, 0f));
+		//GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, Methods.floatBuffer(1f, 1f, 1f, 0f));
+		//GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, Methods.floatBuffer(0f, 0f, 0f, 0f));
 
 		main.start();
 	}

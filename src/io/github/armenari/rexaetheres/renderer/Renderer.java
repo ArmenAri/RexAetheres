@@ -70,6 +70,29 @@ public class Renderer {
 		Texture.default_font.unbind();
 		glDisable(GL_TEXTURE_2D);
 	}
+	
+	public static void renderText(String msg, float x, float y, float x_limit, int size) {
+		msg = msg.toLowerCase();
+		glEnable(GL_TEXTURE_2D);
+		Texture.default_font.bind();
+		glBegin(GL_QUADS);
+		int offs = 0;
+		int j = 0;
+		for (int i = 0; i < msg.length(); i++) {
+			if(j % x_limit == 0 && msg.charAt(i) == ' ') {
+				y += size * 1.5f;
+				j = 0;
+			} else {
+				j++;
+			}
+			offs = j * size;
+			char c = msg.charAt(i);
+			charData(c, x + offs, y + size, size);
+		}
+		glEnd();
+		Texture.default_font.unbind();
+		glDisable(GL_TEXTURE_2D);
+	}
 
 	public static void charData(char c, float f, float y, int size) {
 		int i = chars.indexOf(c);

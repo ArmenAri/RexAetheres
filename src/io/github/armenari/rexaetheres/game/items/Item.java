@@ -11,6 +11,7 @@ public abstract class Item {
 	protected int ID;
 	protected String name;
 	protected Texture texture;
+	
 
 	protected float x;
 	protected float y;
@@ -30,23 +31,28 @@ public abstract class Item {
 	public void render() {
 		int tile_x = Constants.TILE_SIZE * (ID % 8);
 		int tile_y = Constants.TILE_SIZE * (int) (ID / 8);
+		
 		Renderer.renderOffsetImage(texture, x, y, Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, texture.getWidth(),
 				texture.getHeight(), new float[] { 1, 1, 1, 0.7f }, tile_x, tile_y, tile_x + Constants.TILE_SIZE, tile_y + Constants.TILE_SIZE);
+		
+	
 	}
 
 	public void render(float x_, float y_, float size) {
 		int tile_x = Constants.TILE_SIZE * (ID % 8);
 		int tile_y = Constants.TILE_SIZE * (int) (ID / 8);
-		Renderer.renderOffsetImage(texture, x_, y_, size, size, texture.getWidth(), texture.getHeight(),
+		
+		
+	    Renderer.renderOffsetImage(texture, x_, y_, size, size, texture.getWidth(), texture.getHeight(),
 				new float[] { 1, 1, 1, 0.7f }, tile_x, tile_y, tile_x + Constants.TILE_SIZE, tile_y + Constants.TILE_SIZE);
+	
+	   
+	    
 	}
 
 	public void update() {
 		x += dx;
 		y += dy;
-
-		dx *= Constants.DRAG;
-		dy *= Constants.DRAG;
 	}
 
 	/**
