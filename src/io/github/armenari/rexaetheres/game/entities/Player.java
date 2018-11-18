@@ -9,6 +9,7 @@ import io.github.armenari.rexaetheres.game.Inventory;
 import io.github.armenari.rexaetheres.game.Level;
 import io.github.armenari.rexaetheres.game.blocks.ActionBlock;
 import io.github.armenari.rexaetheres.game.blocks.Door;
+import io.github.armenari.rexaetheres.game.items.HintPaper;
 import io.github.armenari.rexaetheres.game.items.Item;
 import io.github.armenari.rexaetheres.renderer.Renderer;
 import io.github.armenari.rexaetheres.renderer.Texture;
@@ -28,11 +29,13 @@ public class Player extends Entity {
 	public Player(String name, float posX, float posY) {
 		super(name, posX, posY);
 		this.inventory = new Inventory();
+
 	}
 
 	public Player(String name) {
 		super(name, 2 * Constants.TILE_SIZE * Constants.SCALE, 2 * Constants.TILE_SIZE * Constants.SCALE);
 		this.inventory = new Inventory();
+
 	}
 
 	/**
@@ -79,6 +82,7 @@ public class Player extends Entity {
 
 	@Override
 	public void render() {
+		inventory.render();
 		Renderer.renderImage(Texture.character, this.posX, this.posY, Constants.PLAYER_SIZE * Constants.SCALE,
 				Constants.PLAYER_SIZE * Constants.SCALE, new float[] { 1, 1, 1, 0.9f });
 		Renderer.renderQuad(posX, posY - 20, (getLife() * Constants.TILE_SIZE * Constants.SCALE) / 100, 5,
@@ -95,10 +99,8 @@ public class Player extends Entity {
 
 	@Override
 	public void update() {
-		inventory.render();
 		inventory.update();
 		recoverItems();
-
 		if (Mouse.isButtonDown(0)) {
 			int x = (int) (Mouse.getX() / (Constants.TILE_SIZE * Constants.SCALE));
 			int y = (int) ((Constants.HEIGHT - Mouse.getY()) / (Constants.TILE_SIZE * Constants.SCALE));
@@ -182,6 +184,7 @@ public class Player extends Entity {
 					actionWithBlocks(x, y);
 				}
 			}
+
 		}
 
 		if (Mouse.isButtonDown(1)) {
@@ -193,6 +196,7 @@ public class Player extends Entity {
 				}
 			}
 		}
+
 	}
 
 	private void recoverItems() {
@@ -261,7 +265,7 @@ public class Player extends Entity {
 				if (ab instanceof Door) {
 					if (Game.access_granted) {
 						ab.playAnimation();
-						
+
 					} else {
 						Game.notifications.get(0).launch("THE DOOR IS LOCKED !", Constants.RED);
 					}
@@ -290,5 +294,12 @@ public class Player extends Entity {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @return the inventory
+	 */
+	public Inventory getInventory() {
+		return inventory;
 	}
 }

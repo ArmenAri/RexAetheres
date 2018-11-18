@@ -16,8 +16,10 @@ public abstract class Item {
 	protected float x;
 	protected float y;
 
-	protected float dx = (float) new Random().nextGaussian() * 2.5f;
-	protected float dy = (float) new Random().nextGaussian() * 2.5f;
+	protected float dx = (float) new Random().nextGaussian() * 3f;
+	protected float dy = (float) new Random().nextGaussian() * 3f;
+	
+	protected boolean infiniteUse = false;
 
 	public Item(int ID, String name, int x, int y) {
 		this.ID = ID;
@@ -53,6 +55,9 @@ public abstract class Item {
 	public void update() {
 		x += dx;
 		y += dy;
+
+		dx *= Constants.DRAG;
+		dy *= Constants.DRAG;
 	}
 
 	/**
@@ -144,5 +149,16 @@ public abstract class Item {
 	public float getDy() {
 		return dy;
 	}
+
+	/**
+	 * @return the infiniteUse
+	 */
+	public boolean isInfiniteUse() {
+		return infiniteUse;
+	}
+
+	public abstract void unaction();
+
+	public abstract void setGuiOpened(boolean b);
 
 }

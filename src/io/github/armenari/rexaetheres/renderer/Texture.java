@@ -22,6 +22,7 @@ public class Texture {
 	public static Texture potions = loadTexture("/assets/items/Potion.png");
 	public static Texture amulets = loadTexture("/assets/items/Amulet.png");
 	public static Texture scrolls = loadTexture("/assets/items/Scroll.png");
+	public static Texture hint_paper = loadTexture("/assets/items/hint_paper.png");
 	
 	public static Texture dbox = loadTexture("/assets/dialog_box.png");
 	

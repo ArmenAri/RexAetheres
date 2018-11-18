@@ -14,4 +14,16 @@ public class Potion extends Item {
 
 	}
 
+	@Override
+	public void unaction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGuiOpened(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

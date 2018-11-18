@@ -21,10 +21,11 @@ public class Inventory {
 
 	public Inventory() {
 		this.items = new ArrayList<>();
+		
 	}
 
 	public void addItem(Item item) {
-		if (items.size() < 72)
+		if (items.size() < invSize)
 			this.items.add(item);
 	}
 
@@ -34,7 +35,7 @@ public class Inventory {
 
 	public void render() {
 		Renderer.renderQuad(startX, startY, (invDisplayItemSize * itemsPerRow),
-				(invDisplayItemSize * (invSize / itemsPerRow)), new float[] { 1, 1, 1, 0.2f });
+				(invDisplayItemSize * (invSize / itemsPerRow)), new float[] { 1, 1, 1, 0.4f });
 		Renderer.renderText("Inventory", startX - 16, startY - 50, 25);
 		for (int i = 0; i < getItems().size(); i++) {
 			getItems().get(i).render(startX + (i % itemsPerRow) * invDisplayItemSize,
@@ -56,12 +57,19 @@ public class Inventory {
 							if (itemIndex < items.size()) {
 								items.get(itemIndex).action();
 								Game.notifications.get(0).launch("You have used a " + items.get(itemIndex).getName() + " !", Constants.PURPLE);
-								removeItem(items.get(itemIndex));
+								if(!items.get(itemIndex).isInfiniteUse()) {
+									removeItem(items.get(itemIndex));
+								}
 							}
 						}
 					}
 				}
 
+			}
+		}
+		if (Mouse.isButtonDown(1)) {
+			for(Item i : items) {
+				i.setGuiOpened(false);
 			}
 		}
 	}

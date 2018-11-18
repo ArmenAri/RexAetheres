@@ -34,6 +34,7 @@ public class Level {
 		player = new Player("Player");
 		floor = new ArrayList<>();
 		tiles = createTileArray(level, secret_key_path);
+		
 	}
 
 //	public void changeLevel(String path, String secret_key_path) {

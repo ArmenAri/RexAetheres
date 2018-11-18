@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import io.github.armenari.rexaetheres.game.blocks.Activator;
 import io.github.armenari.rexaetheres.game.blocks.Door;
+import io.github.armenari.rexaetheres.game.items.HintPaper;
+import io.github.armenari.rexaetheres.game.items.Item;
 import io.github.armenari.rexaetheres.renderer.Notification;
 import io.github.armenari.rexaetheres.renderer.Renderer;
 import io.github.armenari.rexaetheres.utils.Constants;
@@ -32,13 +34,10 @@ public class Game {
 		glLight(GL_LIGHT0, GL_POSITION,
 				Methods.floatBuffer(Level.player.getPosX() + Constants.TILE_SIZE / 2 * Constants.SCALE,
 						Level.player.getPosY() + Constants.TILE_SIZE / 2 * Constants.SCALE, 72, 1));
-
-		
 		
 		for (int i = 0; i < Level.doors.size(); i++) {
 			Door d = Level.doors.get(i);
 			if (access_granted) {
-				
 				Renderer.renderQuad(d.getX() + Constants.TILE_SIZE * Constants.SCALE + 7 * Constants.SCALE, d.getY() + Constants.TILE_SIZE / 2 * Constants.SCALE - 16, 8, 8, new float[] {0, 1, 0, 1});
 			} else {
 				Renderer.renderQuad(d.getX() + Constants.TILE_SIZE * Constants.SCALE + 7 * Constants.SCALE, d.getY() + Constants.TILE_SIZE / 2 * Constants.SCALE - 16, 8, 8, new float[] {1, 0, 0, 1});
@@ -46,12 +45,17 @@ public class Game {
 			}
 		}
 		
-		
-		
 		for (int i = 0; i < notifications.size(); i++) {
 			if (!notifications.get(i).isFinished()) {
 				notifications.get(i).animate(notifications.get(i).getMsg(), notifications.get(i).getColor());
 			} 
+		}
+		for (Item i : Level.player.getInventory().getItems()) {
+			if (i instanceof HintPaper) {
+				if (((HintPaper) i).isGuiOpened()) {
+					((HintPaper) i).renderGUI();
+				}
+			}
 		}
 	}
 
@@ -61,11 +65,8 @@ public class Game {
 			access_granted = isAccesGranted();
 			if(access_granted) {
 				Game.notifications.get(0).launch("THE DOOR IS UNLOCKED !", Constants.GREEN);
-				System.out.println("the door is unlocked !");
 			}
 		}
-		
-		
 	}
 
 	public boolean isAccesGranted() {

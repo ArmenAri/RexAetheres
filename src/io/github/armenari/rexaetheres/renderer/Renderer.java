@@ -70,24 +70,30 @@ public class Renderer {
 		Texture.default_font.unbind();
 		glDisable(GL_TEXTURE_2D);
 	}
-	
-	public static void renderText(String msg, float x, float y, float x_limit, int size) {
+
+	public static void renderText(String msg, float x, float y, float x_limit, int size, float[] color) {
+		x += size;
+		y += size;
+		float x_tmp = x;
+		int offs = 0;
 		msg = msg.toLowerCase();
 		glEnable(GL_TEXTURE_2D);
 		Texture.default_font.bind();
 		glBegin(GL_QUADS);
-		int offs = 0;
+		glColor4f(color[0], color[1], color[2], color[3]);
+		int i = 0;
 		int j = 0;
-		for (int i = 0; i < msg.length(); i++) {
-			if(j % x_limit == 0 && msg.charAt(i) == ' ') {
-				y += size * 1.5f;
+		while(i < msg.length()) {
+			if (x + offs > (x_limit + x) - size * 5) {
+				y += 1.5f * size;
+				x = x_tmp;
 				j = 0;
-			} else {
-				j++;
 			}
 			offs = j * size;
 			char c = msg.charAt(i);
-			charData(c, x + offs, y + size, size);
+			charData(c, x + offs, y, size);
+			i++;
+			j++;
 		}
 		glEnd();
 		Texture.default_font.unbind();
@@ -191,8 +197,9 @@ public class Renderer {
 				int y = Constants.TILE_SIZE * (int) (25 / 24);
 				int size_x = x + Constants.TILE_SIZE;
 				int size_y = y + Constants.TILE_SIZE;
-				Renderer.renderOffsetImage(Texture.ui_pieces, l * Constants.TILE_SIZE * Constants.SCALE, m * Constants.TILE_SIZE * Constants.SCALE,
-						Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE, Texture.ui_pieces.getWidth(),
+				Renderer.renderOffsetImage(Texture.ui_pieces, l * Constants.TILE_SIZE * Constants.SCALE,
+						m * Constants.TILE_SIZE * Constants.SCALE, Constants.TILE_SIZE * Constants.SCALE,
+						Constants.TILE_SIZE * Constants.SCALE, Texture.ui_pieces.getWidth(),
 						Texture.ui_pieces.getHeight(), new float[] { 1, 1, 1, 1 }, x, y, size_x, size_y);
 			}
 		}
